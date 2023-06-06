@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo_API_JWT_SignalR", "Demo_API_JWT_SignalR\Demo_API_JWT_SignalR.csproj", "{144D148B-69B6-41FA-B9FC-534D253EAFF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{144D148B-69B6-41FA-B9FC-534D253EAFF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144D148B-69B6-41FA-B9FC-534D253EAFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144D148B-69B6-41FA-B9FC-534D253EAFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144D148B-69B6-41FA-B9FC-534D253EAFF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B1E1D078-2545-45E7-B8AD-0DCA7C0D67D8}
+	EndGlobalSection
+EndGlobal
