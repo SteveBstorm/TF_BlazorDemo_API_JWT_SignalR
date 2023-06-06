@@ -1,4 +1,8 @@
 using Demo_API_JWT_SignalR.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,28 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TokenManager>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("adminPolicy", policy => policy.RequireRole("admin"));
+    options.AddPolicy("userPolicy", policy => policy.RequireAuthenticatedUser());
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+    options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration.GetSection("tokenInfo").GetSection("key").Value)),
+            ValidateLifetime = true,
+            ValidateAudience = true,
+            ValidAudience = "bidule",
+            ValidIssuer = "truc"
+        };
+    }
+    );
 
 
 
@@ -25,6 +51,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
