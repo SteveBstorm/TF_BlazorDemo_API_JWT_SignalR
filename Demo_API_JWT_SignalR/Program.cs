@@ -16,6 +16,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TokenManager>();
 
+builder.Services.AddCors(o => o.AddPolicy("MyCors", options =>
+    options.WithOrigins("https://localhost:7064")
+            .AllowAnyHeader()
+            .WithMethods("GET")
+            .AllowCredentials()));
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("adminPolicy", policy => policy.RequireRole("admin"));
@@ -49,11 +55,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(o => o.AllowAnyHeader().AllowAnyOrigin().AllowAnyHeader());
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+//app.UseCors("MyCors");
 app.MapControllers();
 
 app.Run();
