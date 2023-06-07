@@ -17,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<TokenManager>();
 
+builder.Services.AddSingleton<ArticleService>();
+
 builder.Services.AddCors(o => o.AddPolicy("MyCors", options =>
     options.WithOrigins("https://localhost:7064")
             .AllowAnyHeader()
@@ -31,6 +33,7 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<ChatHub>();
+builder.Services.AddSingleton<ArticleHub>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
     options =>
@@ -68,4 +71,5 @@ app.UseAuthorization();
 //app.UseCors("MyCors");
 app.MapControllers();
 app.MapHub<ChatHub>("chathub");
+app.MapHub<ArticleHub>("articlehub");
 app.Run();
