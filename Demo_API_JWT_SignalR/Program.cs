@@ -1,3 +1,4 @@
+using Demo_API_JWT_SignalR.Hubs;
 using Demo_API_JWT_SignalR.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
@@ -27,6 +28,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("adminPolicy", policy => policy.RequireRole("admin"));
     options.AddPolicy("userPolicy", policy => policy.RequireAuthenticatedUser());
 });
+
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<ChatHub>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
     options =>
@@ -63,5 +67,5 @@ app.UseAuthorization();
 
 //app.UseCors("MyCors");
 app.MapControllers();
-
+app.MapHub<ChatHub>("chathub");
 app.Run();

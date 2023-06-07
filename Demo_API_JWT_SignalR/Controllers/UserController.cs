@@ -1,4 +1,5 @@
-﻿using Demo_API_JWT_SignalR.Services;
+﻿using Demo_API_JWT_SignalR.Hubs;
+using Demo_API_JWT_SignalR.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,13 @@ namespace Demo_API_JWT_SignalR.Controllers
     {
         private readonly TokenManager _token;
         private readonly UserService _userService;
+        private readonly ChatHub _hub;
 
-        public UserController(TokenManager token, UserService userService)
+        public UserController(TokenManager token, UserService userService, ChatHub hub)
         {
             _token = token;
             _userService = userService;
+            _hub = hub;
         }
 
         [HttpGet("{id}")]
@@ -29,6 +32,13 @@ namespace Demo_API_JWT_SignalR.Controllers
         public IActionResult GetAll()
         {
             return Ok(_userService.GetAll());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendMessage()
+        {
+            await _hub.SendMessage("System", "test");
+            return Ok();
         }
     }
 }
